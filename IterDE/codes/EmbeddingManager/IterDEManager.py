@@ -13,10 +13,11 @@ class IterDEManager(nn.Module):
     def __init__(self, args):
         super(IterDEManager, self).__init__()
         self.args = args
-        pretrain_model = torch.load(os.path.join(self.args.pretrain_path, 'checkpoint'))
+        # pretrain_model = torch.load(os.path.join(self.args.pretrain_path, 'checkpoint'))
+        pretrain_model = torch.load(self.args.pretrain_path)
         self.origin_entity_embedding = nn.Parameter(pretrain_model['model_state_dict']['entity_embedding'].cpu(), requires_grad=False)
         self.origin_relation_embedding = nn.Parameter(pretrain_model['model_state_dict']['relation_embedding'].cpu(), requires_grad=False)
-        self.entity_embedding = nn.Parameter(torch.empty(self.args.nentity, self.args.target_dim*self.args.relation_mul), requires_grad=True)
+        self.entity_embedding = nn.Parameter(torch.empty(self.args.nentity, self.args.target_dim*self.args.entity_mul), requires_grad=True)
         self.relation_embedding = nn.Parameter(torch.empty(self.args.nrelation, self.args.target_dim*self.args.relation_mul), requires_grad=True)
         nn.init.xavier_uniform_(self.entity_embedding)
         nn.init.xavier_uniform_(self.relation_embedding)

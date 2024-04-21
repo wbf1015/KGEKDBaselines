@@ -15,17 +15,18 @@ class RotatE(nn.Module):
         
         logging.info(f'Init RotatE with embedding_range={self.embedding_range}, embedding_dim={self.embedding_dim}, margin={self.margin}')
 
-    def forward(self, head, relation, tail, mode, real_dim=None):
+    def forward(self, head, relation, tail, mode, real_para=None):
         pi = 3.14159265358979323846
         
         re_head, im_head = torch.chunk(head, 2, dim=2)
         re_tail, im_tail = torch.chunk(tail, 2, dim=2)
 
         #Make phases of relations uniformly distributed in [-pi, pi]
-        if real_dim==None:
+        if real_para is None:
             phase_relation = relation/(((self.embedding_range)/self.embedding_dim)/pi)
         else:
-            phase_relation = relation/(((self.embedding_range)/real_dim)/pi)
+            embedding_range, embedding_dim = real_para['embedding_range'], real_para['embedding_dim']
+            phase_relation = relation/(((embedding_range)/embedding_dim)/pi)
 
         re_relation = torch.cos(phase_relation)
         im_relation = torch.sin(phase_relation)

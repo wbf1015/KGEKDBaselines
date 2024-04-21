@@ -27,8 +27,14 @@ class IterDEModel(nn.Module):
         t_head, t_relation, t_tail, head, relation, tail = self.EmbeddingManager(data, mode)
         if self.args.cuda:
             t_head, t_relation, t_tail, head, relation, tail = t_head.cuda(), t_relation.cuda(), t_tail.cuda(), head.cuda(), relation.cuda(), tail.cuda()
-        t_score = self.KGE(t_head, t_relation, t_tail, mode)
-        score = self.KGE(head, relation, tail, mode)
+
+        if type(self.KGE).__name__ is 'TransE':
+            t_score = self.KGE(t_head, t_relation, t_tail, mode)
+            score = self.KGE(head, relation, tail, mode)
+            
+        if type(self.KGE).__name__ is 'RotatE':
+            t_score = self.KGE(t_head, t_relation, t_tail, mode, {'embedding_range' : 6.0+2.0, 'embedding_dim':512})
+            score = self.KGE(head, relation, tail, mode)
         
         # 计算hard_label
         p_score, n_score = self.get_postive_score(score), self.get_negative_score(score)
