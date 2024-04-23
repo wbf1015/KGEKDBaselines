@@ -32,7 +32,7 @@ class DualDEModel(nn.Module):
             score = self.KGE(head, relation, tail, mode)
             
         if type(self.KGE).__name__ == 'RotatE':
-            t_score = self.KGE(t_head, t_relation, t_tail, mode, {'embedding_range' : 6.0+2.0, 'embedding_dim':512})
+            t_score = self.KGE(t_head, t_relation, t_tail, mode, {'embedding_range' : 9.0+2.0, 'embedding_dim':512})
             score = self.KGE(head, relation, tail, mode)
         
         structure_loss_dict = self.DualLoss.structure_loss(t_head, t_tail, head, tail)

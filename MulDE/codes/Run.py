@@ -4,6 +4,7 @@ import numpy as np
 from DataLoader.RandomSample import *
 from EmbeddingManager.MulDEManager import *
 from KGES.TransE import *
+from KGES.RotatE import *
 from Models.MulDEModel import *
 from Loss.MulDELoss import *
 from Optim.Optim import *
@@ -67,7 +68,8 @@ logging.info('Successfully init TrainDataLoader and TestDataLoader')
 '''
 声明Excuter组件
 '''
-KGE=TransE(margin=args.gamma)
+# KGE=TransE(margin=args.gamma)
+KGE=RotatE(margin=args.gamma, embedding_range=args.gamma+2.0, embedding_dim=args.target_dim)
 
 muldeloss = MulDELoss(adv_temperature = args.adversarial_temperature, margin = args.gamma, l=args.soft_loss_weight)
 embedding_manager=MulDEManager(args)

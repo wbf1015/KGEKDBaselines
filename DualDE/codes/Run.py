@@ -72,12 +72,12 @@ logging.info('Successfully init TrainDataLoader and TestDataLoader')
 KGE=RotatE(margin=None, embedding_range=args.gamma+2.0, embedding_dim=args.target_dim)
 
 # Stage1
-dualloss = DualLoss(adv_temperature = args.adversarial_temperature, margin = args.gamma, l=0)
-embedding_manager=DualDEManager(args)
+# dualloss = DualLoss(adv_temperature = args.adversarial_temperature, margin = args.gamma, l=0)
+# embedding_manager=DualDEManager(args)
 
 # Stage2
-# dualloss = DualLoss(adv_temperature = args.adversarial_temperature, margin = args.gamma, l=1)
-# embedding_manager=DualDEManager2(args)
+dualloss = DualLoss(adv_temperature = args.adversarial_temperature, margin = args.gamma, l=1)
+embedding_manager=DualDEManager2(args)
 
 
 

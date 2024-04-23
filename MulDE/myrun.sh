@@ -11,7 +11,7 @@ STEPS=${5}
 HIDDEN_DIM=${6}
 TARGET_DIM=${7}
 SEED=${8}
-L2NORMWEIGHT=${9}
+WEIGHT_DECAY=${9}
 DATASET=${10}
 ENTITY_MUL=${11}
 RELATION_MUL=${12}
@@ -20,11 +20,11 @@ SCHEDULER=${14}
 TEST_BATCH_SIZE=${15}
 
 DATA_PATH=$DATA_PATH/$DATASET
-SAVE_PATH=$SAVE_PATH/"DualDE"_"$DATASET"_"$SEED"
+SAVE_PATH=$SAVE_PATH/"MulDE"_"$DATASET"_"$SEED"
 
 CUDA_VISIBLE_DEVICES=$GPU_DEVICE python -u $CODE_PATH/Run.py -cuda \
     -seed $SEED \
-    -data_path $DATA_PATH -save_path $SAVE_PATH -l2norm_weight $L2NORMWEIGHT \
+    -data_path $DATA_PATH -save_path $SAVE_PATH -weight_decay $WEIGHT_DECAY \
     -entity_mul $ENTITY_MUL -relation_mul $RELATION_MUL \
     -batch_size $BATCH_SIZE -negative_sample_size $NEG_SAMPLE_SIZE -gamma $GAMMA \
     -lr $LR -steps $STEPS \

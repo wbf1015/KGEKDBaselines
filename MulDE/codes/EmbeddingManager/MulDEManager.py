@@ -46,7 +46,7 @@ class MulDEManager(nn.Module):
         
         for i in range(self.teacher_num):
             head, relation, tail = self.get_teacher_embedding((positive, negative), mode, i)
-            t_score = KGE(head, relation, tail, mode)
+            t_score = KGE(head, relation, tail, mode, {'embedding_range':11.0, 'embedding_dim':128})
             t_scores[i] = t_score[:, 1:]
 
         t_scores = t_scores.to(positive.device)
