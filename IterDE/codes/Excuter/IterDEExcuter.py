@@ -196,7 +196,7 @@ class IterDEExcuter(object):
     
     def load_model(self, model, args):
         logging.info('Loading checkpoint %s...' % args.init_checkpoint)
-        checkpoint = torch.load(os.path.join(args.init_checkpoint, 'checkpoint'))
+        checkpoint = torch.load(args.init_checkpoint)
         model.load_state_dict(checkpoint['model_state_dict'])
 
     
