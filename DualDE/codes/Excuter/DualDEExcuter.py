@@ -64,6 +64,7 @@ class DualDEExcuter(object):
             if (step+1)%(self.args.test_per_steps+1)==0:
                 metric = self.test_model()
                 self.log_metrics(step, metric)
+                self.save_model(self.model, self.args)
             
         
         metric = self.test_model()
@@ -197,7 +198,7 @@ class DualDEExcuter(object):
     
     def load_model(self, model, args):
         logging.info('Loading checkpoint %s...' % args.init_checkpoint)
-        checkpoint = torch.load(os.path.join(args.init_checkpoint, 'checkpoint'))
+        checkpoint = torch.load(args.init_checkpoint)
         model.load_state_dict(checkpoint['model_state_dict'])
 
     

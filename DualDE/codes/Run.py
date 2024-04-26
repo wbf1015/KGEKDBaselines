@@ -68,8 +68,8 @@ logging.info('Successfully init TrainDataLoader and TestDataLoader')
 '''
 声明Excuter组件
 '''
-# KGE=TransE(margin=None)
-KGE=RotatE(margin=None, embedding_range=args.gamma+2.0, embedding_dim=args.target_dim)
+KGE=TransE(margin=None)
+# KGE=RotatE(margin=None, embedding_range=args.gamma+2.0, embedding_dim=args.target_dim)
 
 # Stage1
 # dualloss = DualLoss(adv_temperature = args.adversarial_temperature, margin = args.gamma, l=0)
