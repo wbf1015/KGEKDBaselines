@@ -25,6 +25,7 @@ class IterDEExcuter(object):
                  args=None,
     ):
         self.args = args
+        self.KGE = KGE
         self.model = model(KGE=KGE, embedding_manager=embedding_manager, soft_loss=soft_loss, hard_loss=hard_loss, args=args)
         self.trainDataloader = trainDataloader
         self.testDataLoaders = testDataLoaders # 这个应该是一个list
@@ -104,7 +105,7 @@ class IterDEExcuter(object):
                     score = score[:, 1:]
                     
                     #Explicitly sort all the entities to ensure that there is no test exposure bias
-                    if self.model.KGE.margin is not None:
+                    if (self.model.KGE.margin is not None) or (type(self.KGE).__name__ == 'ComplEx'):
                         score += filter_bias
                         argsort = torch.argsort(score, dim = 1, descending=True)
                     else:

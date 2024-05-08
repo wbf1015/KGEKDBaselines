@@ -5,6 +5,8 @@ from DataLoader.RandomSample import *
 from EmbeddingManager.IterDEManager import *
 from KGES.TransE import *
 from KGES.RotatE import *
+from KGES.SimplE import *
+from KGES.ComplEx import *
 from Models.IterDEModel import *
 from Loss.SigmoidLossOrigin import *
 from Loss.HuberLoss import *
@@ -69,7 +71,9 @@ logging.info('Successfully init TrainDataLoader and TestDataLoader')
 声明Excuter组件
 '''
 # KGE=TransE(margin=None)
-KGE=RotatE(margin=None, embedding_range=args.gamma+2.0, embedding_dim=args.target_dim)
+# KGE=RotatE(margin=None, embedding_range=args.gamma+2.0, embedding_dim=args.target_dim)
+# KGE = SimplE(margin=None)
+KGE = ComplEx(margin=None)
 
 if args.negative_adversarial_sampling is False:
     hard_loss=SigmoidLossOrigin(adv_temperature=None, margin=args.gamma)

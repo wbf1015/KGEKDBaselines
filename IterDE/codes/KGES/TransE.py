@@ -13,7 +13,7 @@ class TransE(nn.Module):
         
         logging.info(f'Init TransE with margin={self.margin}')
 
-    def forward(self, head, relation, tail, mode, real_dim=None):
+    def forward(self, head, relation, tail, mode, real_para=None):
         if mode == 'head-batch':
             score = head + (relation - tail)
         else:

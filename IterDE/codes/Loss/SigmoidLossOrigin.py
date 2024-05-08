@@ -20,9 +20,12 @@ class SigmoidLossOrigin(nn.Module):
             self.adv_flag = False
             logging.info('Init SigmoidLossOrigin without adv_temperature')
 
-    def forward(self, p_score, n_score, subsampling_weight=None, sub_margin=False):
+    def forward(self, p_score, n_score, subsampling_weight=None, sub_margin=False, add_margin=False):
         if sub_margin:
             p_score, n_score = self.margin-p_score, self.margin-n_score
+        if add_margin:
+            p_score, n_score = self.margin+p_score, self.margin+n_score
+        
         if self.adv_flag:
             #In self-adversarial sampling, we do not apply back-propagation on the sampling weight
             negative_score = (F.softmax(n_score * self.adv_temperature, dim = 1).detach() 
