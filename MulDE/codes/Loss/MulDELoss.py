@@ -70,8 +70,13 @@ class MulDELoss(nn.Module):
             F.logsigmoid(Sti),
             torch.log(1 - torch.sigmoid(Sti))
         )
+        # result = torch.where(
+        #     torch.isinf(result),
+        #     torch.full_like(result, 0),
+        #     result)
         # 计算最终结果的平均值
         LS = result.mean()
+        # LS = torch.tensor(0).to(positive.device)
         return -LS
         
         
@@ -96,6 +101,7 @@ class MulDELoss(nn.Module):
         loss = LJ + LS
         hardloss_record.update({
             'Student soft loss': Lsoft.item(),
+            'Senior loss' : LS.item(),
             'Junior loss': LJ.item(),
             'total_loss' : loss.item(),
         })

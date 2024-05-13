@@ -35,6 +35,10 @@ class DualDEModel(nn.Module):
             t_score = self.KGE(t_head, t_relation, t_tail, mode, {'embedding_range' : 6.0+2.0, 'embedding_dim':512})
             score = self.KGE(head, relation, tail, mode)
         
+        if type(self.KGE).__name__ == 'SimplE':
+            t_score = self.KGE(t_head, t_relation, t_tail, mode)
+            score = self.KGE(head, relation, tail, mode)
+        
         structure_loss_dict = self.DualLoss.structure_loss(t_head, t_tail, head, tail)
         
         loss, loss_record = self.DualLoss(t_score, score, structure_loss_dict, subsampling_weight)
